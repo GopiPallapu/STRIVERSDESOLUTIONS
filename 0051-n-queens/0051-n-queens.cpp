@@ -35,7 +35,7 @@ public:
         }
         return true;
     }
-    void helper(int i , int n , vector<vector<string>> &ans ,  vector<vector<char>> &matrix)
+    void helper(int i , int n , vector<vector<string>> &ans ,  vector<vector<char>> &matrix , vector<int>& leftRow , vector<int>& lowerdiagonal , vector<int>& upperdiagonal)
     {
         if(i == n)
         {
@@ -54,11 +54,17 @@ public:
         }
         for(int j = 0;j<n;j++)
         {
-            if(isValid(i,j ,n , matrix))
+            if(leftRow[j] == 0 && lowerdiagonal[i+j] == 0 && upperdiagonal[(n-1)+(j-i)] == 0)
             {
                 matrix[i][j] ='Q';
-                helper(i+1 , n,ans,matrix);
+                leftRow[j] = 1;
+                lowerdiagonal[i+j] = 1;
+                upperdiagonal[(n-1)+(j-i)] = 1;
+                helper(i+1 , n,ans,matrix, leftRow , lowerdiagonal, upperdiagonal);
                 matrix[i][j] ='.';
+                leftRow[j] = 0;
+                lowerdiagonal[i+j] = 0;
+                upperdiagonal[(n-1)+(j-i)] = 0;
             }
         }
         return;
@@ -66,7 +72,9 @@ public:
     vector<vector<string>> solveNQueens(int n) {
         vector<vector<char>> matrix (n , vector<char>(n,'.'));
          vector<vector<string>> ans ;
-         helper(0,n,ans , matrix);
+         // using hashing isvalid function is going to be arrased
+         vector<int> leftRow (n,0) ,lowerdiagonal(2 * n  - 1 , 0) , upperdiagonal (2 * n - 1 , 0);
+         helper(0,n,ans , matrix , leftRow  ,lowerdiagonal ,upperdiagonal );
          return ans;
     }
 };
