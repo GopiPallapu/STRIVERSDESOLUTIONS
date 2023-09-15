@@ -1,5 +1,14 @@
 class Solution {
 public:
+    /*
+        Approach:
+        basic recurrsion and backtracking
+        iterate throught string and find out word present in dict . if yes, add space  it 
+        and add it substr and call recurrsion
+        after that remove that space for other combination
+        TC => O(n^2)
+        SC => O(n)
+    */
     void helper(int index , string& s , string substr  ,vector<string>& answer, unordered_set<string>& words)
     {
         if(index == s.size())
