@@ -6,6 +6,7 @@ public:
         find max left and max right and check with current left, right and get answer
         TC => O(n)
         SC => O(1)
+        using prefix max and suffix max arrays and find min of those at each index and adding it to result
     */
     int trap(vector<int>& height) 
     {
