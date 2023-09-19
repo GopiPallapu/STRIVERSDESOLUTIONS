@@ -27,9 +27,33 @@ public:
         int n2 = nums2.size() ;
 
         // iterate through first array
-        for(int i =0 ;i< n1 ; i++ )
+
+        unordered_map<int,int> mp;
+        stack<int> st;
+
+        /*for(int i =0 ;i< n1 ; i++ )
         {
             answer.push_back(getNextElement(nums1[i] , nums2));
+        }*/
+        for(int i = n2 - 1 ; i>= 0 ;i--)
+        {
+            while(!st.empty() && nums2[i] >= st.top())
+            {
+                st.pop();
+            }
+            if(st.empty())
+            {
+                mp[nums2[i]] = -1;
+            }
+            else
+            {
+                mp[nums2[i]] = st.top();
+            }
+            st.push(nums2[i]);
+        }
+        for(int i =0 ;i< n1 ; i++)
+        {
+            answer.push_back(mp[nums1[i]]);
         }
         return answer;
     }
