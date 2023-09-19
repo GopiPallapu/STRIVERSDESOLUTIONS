@@ -1,6 +1,9 @@
 class Solution {
 public:
     // 1,2,1,1,2,1
+    // because of this circular array , we have to traverse double the size;
+    //  using stack we can store max element
+    // TC => O(n) SC => O(n)
     vector<int> nextGreaterElements(vector<int>& nums) {
         int n = nums.size() ;
         vector<int> temp  = nums ;
@@ -34,15 +37,9 @@ public:
             {
                 st.pop();
             }
-            if(st.empty() )
+            if(!st.empty() && (i < n))
             {
-                if(i < n)
-                    answer[i] = -1;
-            }
-            else
-            {
-                if(i < n)
-                     answer[i] = (st.top());
+                answer[i] = (st.top());
             }
             st.push(nums[i%n]);
         }
