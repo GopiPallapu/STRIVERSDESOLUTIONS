@@ -34,12 +34,12 @@ public:
                 while(digit -- )
                 {
                     str +=substring ;
-                }
+                }                
                 substring = str ; // add it to substring for any previous multiplications required 
             }
             else
             {
-                substring +=s[i];
+                substring +=s[i]; // a
             }
         }
         return substring ;// final result
