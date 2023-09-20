@@ -27,7 +27,9 @@ public:
         int n2 = nums2.size() ;
 
         // iterate through first array
-
+        // using map and stack we can store for each index what is the next greater number using stack
+        // TC => O( n1+n2)
+        // SC => O(n2) // for storing next greater numbers
         unordered_map<int,int> mp;
         stack<int> st;
 
