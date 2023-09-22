@@ -8,40 +8,68 @@ public:
    
     string decodeString(string s) {
         int n = s.size() ;
-        stack<int> stDigit ; // to store multiplier digits
-        stack<string> stChars ; // to store substring to get multiplied
-        int multiplier =0;
-        string substring = "" ; // final answer string
-        for(int i =0 ;i < n;i++)
+        stack<pair<int,string>> st ;// to store digit followed by string to diplay digit times
+        string answer = "" ; // result string
+        int i =0 ;
+        while( i < n)
         {
-            if(isdigit(s[i]))
+            // case 1 - it is a digit
+            if(s[i] - '0' >= 0 && s[i]-'0' <= 9)
             {
-                multiplier = multiplier * 10 + (s[i]- '0');
-            }
-            else if(s[i] == '[')
-            {
-                stDigit.push(multiplier) ; // push total digits till ' [ ' to stack and reset multiplier
-                multiplier = 0;
-                stChars.push(substring) ; // push current substring to stak and reset
-                substring.clear();
-            }
-            else if( s[i] == ']')
-            {
-                int digit = stDigit.top() ; // get digit
-                stDigit.pop() ;
-                string str = stChars.top() ; //  get substring to get multiplied
-                stChars.pop() ;
-                while(digit -- )
+                int start = i ;
+                while( (s[i] - '0' >= 0 && s[i]-'0' <= 9))
                 {
-                    str +=substring ;
-                }                
-                substring = str ; // add it to substring for any previous multiplications required 
+                    i++;
+                }
+                int num = stoi(s.substr(start , i - start));
+                st.push({num , ""});
+                continue ;
+            }
+            // case 2 - it is a char take string attach it answer if stack empty 
+            // else attach it to stack top string
+            else if(s[i] - 'a' >= 0 && s[i]-'a' <= 26)
+            {
+                int start = i ;
+                while( (s[i] - 'a' >= 0 && s[i]-'a' <= 26))
+                {
+                    i++;
+                }
+                string str = s.substr(start , i - start);
+                if(!st.empty())
+                {
+                    st.top().second +=str ;
+                }
+                else
+                {
+                    answer += str ;
+                }
+                continue ;
+            }
+            // it is a closing bracket
+            // take the top num - str , multiply the str num times and attach it to stack if not empty
+            // if empty there is no digit in stack , attach it to answer
+            else if(s[i] == ']')
+            {
+                    pair<int,string> p1 = st.top() ;
+                    st.pop() ;
+                    string nestr = "" ;
+                    while(p1.first --)
+                    {
+                        nestr +=p1.second ;
+                    }
+                    if(!st.empty())
+                    {
+                        st.top().second += nestr ; // add it stack top
+                    }
+                    else
+                        answer +=nestr ; // add it final answer
+                    i++;
             }
             else
             {
-                substring +=s[i]; // a
+                i++; // char is a opening bracker '['
             }
         }
-        return substring ;// final result
+        return answer ;
     }
 };
