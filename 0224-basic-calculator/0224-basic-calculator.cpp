@@ -10,18 +10,19 @@ public:
         {
             if(isdigit(s[i]))
             {  
-                num = num * 10 + (s[i]-'0');
-            }
-            else if(s[i] == '+')
-            {
-                result  += num * sign; 
+                while(i < n && isdigit(s[i]))
+                {
+                     num = num * 10 + (s[i]-'0');
+                     i++;
+                }
+                i--;
+                result += num * sign ;
                 num =0;
                 sign =1;
+               
             }
             else if(s[i] =='-')
             {
-                result  += num * sign; 
-                num =0;
                 sign =-1;
             }
             else if(s[i] == '(')
