@@ -13,25 +13,16 @@ public:
     ListNode* reverse(ListNode* head)
     {
         if(head->next == NULL)return head;
-        ListNode* revHead = reverse(head->next);
-        head->next->next = head;
-        head->next = NULL;
-        return revHead;
+        ListNode* newHead = reverse(head->next) ;
+        head->next->next = head ;
+        head->next = NULL ;
+        return newHead ;
     }
     ListNode* reverseList(ListNode* head) {
-        // recurrsive approach
-        if(head == NULL )return NULL;
-        return reverse(head);
-        /*
-        if(head == NULL || head->next == NULL )return head;
-        ListNode *previous = NULL , *current = head , *n = head->next;
-        while(current != NULL)
-        {
-            current->next =previous;
-            previous =current ;
-            current  = n;
-            if(n)n = n->next;
-        }
-        return previous;*/
+        // recurrsive approach :
+        if(head == NULL) return head;
+        return reverse(head) ;
+        
     }
 };
+
