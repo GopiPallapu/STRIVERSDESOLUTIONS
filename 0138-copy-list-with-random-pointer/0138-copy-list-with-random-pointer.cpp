@@ -20,23 +20,48 @@ public:
 
 class Solution {
 public:
+    void copy(Node* head)
+    {
+        if(head == NULL)
+            return ;
+        Node* temp = head  , *nxt = head->next;
+        while(temp != NULL)
+        {
+            Node* n = new Node(temp->val) ;
+            n->next = nxt ;
+            temp->next = n ;
+            temp = nxt;
+            if(nxt)nxt = nxt->next ;
+        }
+    }
+    void randomM(Node* head)
+    {
+        Node* temp  = head ;
+        while(temp != NULL)
+        {
+            if(temp->random != NULL)
+            {
+                temp->next->random = temp->random->next ;
+            }
+            temp = temp->next->next ;
+        }
+    }
+    Node* detach(Node* head)
+    {
+        Node* dummy = new Node(-1) ;
+        Node* tail  = dummy , *temp = head ;
+        while(temp != NULL)
+        {
+            tail->next = temp->next ;
+            tail = tail->next ;
+            temp->next = tail->next ;
+            temp = temp->next;
+        }
+        return dummy->next ;
+    }
     Node* copyRandomList(Node* head) {
-        if(head == NULL)return head ;
-        unordered_map <Node* , Node*> mp ;
-        Node* temp = head ;
-        while(temp != NULL)
-        {
-            Node* newNode =  new Node(temp->val) ;
-            mp[temp] = newNode ;
-            temp = temp->next ;
-        }
-        temp= head;
-        while(temp != NULL)
-        {
-            mp[temp]->next = mp[temp->next] ;
-            mp[temp]->random = mp[temp->random] ;
-            temp = temp->next ;
-        }
-        return mp[head] ; 
+       copy(head) ;
+       randomM(head) ;
+       return detach(head) ;
     }
 };
