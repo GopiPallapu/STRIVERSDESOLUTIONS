@@ -11,18 +11,18 @@
  */
 class Solution {
 public:
-    int maxSum(TreeNode* root , int& answer)
-    {
-        if(root == NULL)
-            return 0 ;
-        int leftH = max(0 , maxSum(root->left , answer));
-        int rightH = max(0 , maxSum(root->right , answer));
-        answer = max(answer , leftH+rightH+root->val);
-        return max(leftH , rightH)+root->val;
-    }
+   int helper(TreeNode* root , int& answer)
+   {
+       if(root == NULL)
+            return 0;
+        int leftH = max(0 , helper(root->left , answer)); // left max if no child or single child return 0
+        int rightH = max(0 ,helper(root->right ,answer));// right max if no child or single child return 0
+        answer = max(answer , leftH+rightH+root->val); // for current node add left sum and rightSum 
+        return max(leftH,rightH)+root->val; // backtracking return max of left and right along with current node
+   }
     int maxPathSum(TreeNode* root) {
-        int answer =INT_MIN;
-        maxSum(root,answer);
-        return answer ;
+       int answer =INT_MIN ;
+       helper(root , answer);
+       return answer ;
     }
 };
