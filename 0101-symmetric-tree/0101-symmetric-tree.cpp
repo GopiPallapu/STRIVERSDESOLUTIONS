@@ -11,25 +11,27 @@
  */
 class Solution {
 public:
-    bool check(TreeNode* root1 , TreeNode* root2)
+    bool isSame(TreeNode* root1 , TreeNode* root2)
     {
+        // base case
         if(root1 == NULL || root2 == NULL)
         {
-            return root1 == root2;
+            return root1 == root2 ;
         }
         if(root1->val == root2->val)
         {
-             bool b1 = check(root1->left , root2->right);
-             bool b2 = check(root1->right , root2->left);
-             return b1&&b2 ;
+            bool left = isSame(root1->left , root2->right) ;
+            bool  right = isSame(root1->right , root2->left) ;
+            return left && right ;
         }
         else
+        {
             return false;
-       
+        }
     }
     bool isSymmetric(TreeNode* root) {
         if(root == NULL)
             return true ;
-        return check(root->left , root->right);
+        return isSame(root->left , root->right);
     }
 };
