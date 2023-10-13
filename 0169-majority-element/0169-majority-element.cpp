@@ -1,22 +1,23 @@
 class Solution {
 public:
     int majorityElement(vector<int>& nums) {
-        // using voting algorithm 
-        int element =0;
-        int count =0;
-        int n = nums.size() ;
-        for(int i =0 ;i< n;i++)
+        int count  =0 ;
+        int value  =0;
+        for(int i =0 ;i< nums.size() ; i++)
         {
-            if(count == 0)
+            if(count  == 0)
             {
-                element = nums[i];
-                count = 1;
+                value = nums[i] ;
             }
-            else if(element == nums[i])
-                count +=1;
+            if(value == nums[i])
+            {
+                count ++ ;
+            }
             else
-                count -=1;
+            {
+                count -- ;
+            }
         }
-        return element;
+        return value ;
     }
 };
