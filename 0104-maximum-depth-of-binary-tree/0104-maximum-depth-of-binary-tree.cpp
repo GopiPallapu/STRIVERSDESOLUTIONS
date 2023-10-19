@@ -10,19 +10,13 @@
  * };
  */
 class Solution {
-public: 
-    int helper(TreeNode* root)
-    {
-        // base case
-        if(root == NULL)
-        {
-            return 0;
-        }
-        int leftH = helper(root->left);
-        int rightH  =helper(root->right) ;
-        return max(leftH , rightH)+1 ;
-    }
+public:
+    
     int maxDepth(TreeNode* root) {
-        return helper(root);
+        if(root == NULL)
+            return 0;
+        int left = maxDepth(root->left) ;
+        int right = maxDepth(root->right) ;
+        return max(left,right)+1 ;
     }
 };
