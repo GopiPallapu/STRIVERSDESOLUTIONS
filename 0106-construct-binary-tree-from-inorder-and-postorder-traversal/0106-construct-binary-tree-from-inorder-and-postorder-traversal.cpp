@@ -11,9 +11,9 @@
  */
 class Solution {
 public:
-    unordered_map<int,int> mp;
-    int index =0;
-    TreeNode* helper(vector<int>& postOrder , int start , int end )
+    map<int,int> mp ;
+    int index =0 ;
+    TreeNode* helper(vector<int>& postOrder , int start , int end)
     {
         if(start > end)
         {
@@ -29,15 +29,13 @@ public:
         rootnode->right = helper(postOrder  , indexInInorder+1 , end );
         rootnode->left = helper(postOrder , start , indexInInorder-1 );
         return rootnode;
-        
     }
-    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
-        int n = inorder.size();
-        index =n-1;
-	    for(int i =0 ;i < inorder.size() ; i++)
-	    {
-	        mp[inorder[i]] = i;
-	    }
-	    return helper(postorder , 0 , n-1);
+     TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
+        for(int i =0 ; i< inorder.size() ; i++)
+        {
+            mp[inorder[i]] = i ;
+        }
+        index = postorder.size()-1 ;
+        return helper(postorder , 0 , postorder.size()-1) ;
     }
 };
