@@ -1,30 +1,38 @@
 class Solution {
 public:
+    bool check(unordered_map<char,int> &map_s,unordered_map<char,int> &map_t){
+        for(auto &itr: map_t){
+            if(map_s[itr.first] < itr.second) return false;
+        }
+        return true;
+    }
     string minWindow(string s, string t) {
-        if(s.size() < t.size()){
-            return "";
+        unordered_map<char,int> mapT , mapS ;
+        for(auto itr : t)
+        {
+            mapT[itr]++ ;
         }
-        unordered_map<char,int> map;
-        for(int i=0;i<t.size();i++){
-            map[t[i]]++;
-        }
-        int count=0,start=0,min_length = INT_MAX, min_start = 0;
-        for(int end=0; end<s.size(); end++){
-            if(map[s[end]]>0){
-                count++;
-            }
-            map[s[end]]--; 
-            if(count == t.length()) { 
-                while(start < end && map[s[start]] < 0){
-                    map[s[start]]++, start++;
-                } 
-                if(min_length > end-start){
-                    min_length = end-(min_start=start)+1; 
+        int i =0, j =0 ,ansLen = INT_MAX , startIndex = 0;
+        while(j < s.size())
+        {
+            mapS[s[j]]++ ;
+            while(check(mapS , mapT))
+            {
+                if(ansLen >= j-i+1)
+                {
+                    ansLen = min(ansLen , j-i+1) ;
+                    startIndex = i ;
                 }
-                map[s[start++]]++; 
-                count--;
+                mapS[s[i]]--;
+                if(mapS[s[i]] == 0)
+                    mapS.erase(s[i]) ;
+                i++;
             }
+            j++ ;
         }
-        return min_length == INT_MAX ? "" : s.substr(min_start, min_length);
+        if(ansLen == INT_MAX)
+            return "";
+        else
+            return s.substr(startIndex , ansLen);
     }
 };
