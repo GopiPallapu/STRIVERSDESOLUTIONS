@@ -1,45 +1,42 @@
 class Solution {
 public:
     /*
-        Approach :
-        using two pointer approach from left and right
-        find max left and max right and check with current left, right and get answer
-        TC => O(n)
-        SC => O(1)
-        using prefix max and suffix max arrays and find min of those at each index and adding it to result
+        Input: height = [0,1,0,2,1,0,1,3,2,1,2,1]
+        Output: 6
     */
-    int trap(vector<int>& height) 
-    {
-        int n = height.size();
-        int left =0 , right = n-1 ,leftB = height[0] , rightB = height[n-1];
-        int answer = 0;
-        while(left <= right)
+    int trap(vector<int>& height) {
+        int n = height.size() ;
+        int waterDepth =0 ;
+        int left =0 , right = n-1 , leftBar = height[left] , rightBar = height[right] ;
+        while(left < right)
         {
-            if(leftB < rightB)
+            if(leftBar < rightBar)
             {
-                if(height[left] > leftB)
+                if(leftBar < height[left])
                 {
-                    leftB = height[left];
+                    leftBar = height[left] ;
+                    continue ;
                 }
                 else
                 {
-                    answer +=leftB-height[left];
-                    left++;
+                    waterDepth += leftBar- height[left] ;
+                    left ++ ;
                 }
             }
             else
             {
-                if(height[right] > rightB)
+                if(rightBar < height[right])
                 {
-                    rightB =height[right];
+                    rightBar = height[right] ;
+                    continue ;
                 }
                 else
                 {
-                    answer +=rightB-height[right];
-                    right--;
+                    waterDepth += rightBar- height[right] ;
+                    right -- ;
                 }
             }
         }
-        return answer;
+        return waterDepth ;
     }
 };
